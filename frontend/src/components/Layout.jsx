@@ -1,7 +1,23 @@
 import Sidebar from './Sidebar';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Navigate } from 'react-router-dom';
+import { useContext } from 'react';
+import AuthContext from '../context/AuthContext';
 
 const Layout = () => {
+    const { user, loading } = useContext(AuthContext);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen bg-slate-50">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+            </div>
+        );
+    }
+
+    if (!user) {
+        return <Navigate to="/login" replace />;
+    }
+
     return (
         <div className="flex bg-slate-50 min-h-screen font-sans antialiased text-slate-900">
             <Sidebar />
