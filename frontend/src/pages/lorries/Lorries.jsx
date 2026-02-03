@@ -13,7 +13,7 @@ const Lorries = () => {
 
     const fetchLorries = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/lorries');
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/lorries`);
             setLorries(res.data);
             setLoading(false);
         } catch (err) {
@@ -29,9 +29,9 @@ const Lorries = () => {
     const handleAddLorry = async (data) => {
         try {
             if (editingLorry) {
-                await axios.put(`http://localhost:5000/api/lorries/${editingLorry._id}`, data);
+                await axios.put(`${import.meta.env.VITE_API_URL}/api/lorries/${editingLorry._id}`, data);
             } else {
-                await axios.post('http://localhost:5000/api/lorries', data);
+                await axios.post(`${import.meta.env.VITE_API_URL}/api/lorries`, data);
             }
             fetchLorries();
             setIsModalOpen(false);
@@ -44,7 +44,7 @@ const Lorries = () => {
     const handleDeleteLorry = async (id) => {
         if (window.confirm('Are you sure you want to delete this lorry?')) {
             try {
-                await axios.delete(`http://localhost:5000/api/lorries/${id}`);
+                await axios.delete(`${import.meta.env.VITE_API_URL}/api/lorries/${id}`);
                 fetchLorries();
             } catch (err) {
                 console.error('Error deleting lorry:', err);
@@ -115,8 +115,8 @@ const Lorries = () => {
                                         <td className="p-4">{lorry.model}</td>
                                         <td className="p-4">
                                             <span className={`px-3 py-1 rounded-full text-xs font-bold ${lorry.status === 'available' ? 'bg-green-100 text-green-700' :
-                                                    lorry.status === 'on-trip' ? 'bg-blue-100 text-blue-700' :
-                                                        'bg-orange-100 text-orange-700'
+                                                lorry.status === 'on-trip' ? 'bg-blue-100 text-blue-700' :
+                                                    'bg-orange-100 text-orange-700'
                                                 }`}>
                                                 {lorry.status}
                                             </span>

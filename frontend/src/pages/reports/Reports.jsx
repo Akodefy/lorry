@@ -11,7 +11,7 @@ const Reports = () => {
     useEffect(() => {
         const fetchReports = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/reports');
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/reports`);
                 setTripData(res.data.tripData);
                 setExpenseData(res.data.expenseData);
             } catch (error) {

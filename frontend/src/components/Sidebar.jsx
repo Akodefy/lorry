@@ -25,7 +25,7 @@ const Sidebar = () => {
     const handleUnlock = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:5000/api/settings/verify-lock', { password: lockPassword });
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/settings/verify-lock`, { password: lockPassword });
             if (res.data.success) {
                 setIsLockModalOpen(false);
                 setLockPassword('');
@@ -121,9 +121,9 @@ const Sidebar = () => {
                             </div>
                         </form>
                     </div>
-                </div>
+                </div >
             )}
-        </div>
+        </div >
     );
 };
 

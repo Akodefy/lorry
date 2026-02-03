@@ -21,7 +21,7 @@ const Trips = () => {
 
     const fetchTrips = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/trips');
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/trips`);
             setTrips(res.data);
             setLoading(false);
         } catch (err) {
@@ -36,7 +36,7 @@ const Trips = () => {
 
     const handleCreateTrip = async (data) => {
         try {
-            await axios.post('http://localhost:5000/api/trips', data);
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/trips`, data);
             fetchTrips();
             setIsModalOpen(false);
         } catch (err) {
@@ -65,7 +65,7 @@ const Trips = () => {
             }
 
             // Using the specific POD route we created
-            await axios.put(`http://localhost:5000/api/trips/${selectedTrip._id}/pod`, formData, {
+            await axios.put(`${import.meta.env.VITE_API_URL}/api/trips/${selectedTrip._id}/pod`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

@@ -38,8 +38,8 @@ const Dashboard = () => {
         const fetchDashboardData = async () => {
             try {
                 const [statsRes, alertsRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/dashboard/stats'),
-                    axios.get('http://localhost:5000/api/dashboard/alerts')
+                    axios.get(`${import.meta.env.VITE_API_URL}/api/dashboard/stats`),
+                    axios.get(`${import.meta.env.VITE_API_URL}/api/dashboard/alerts`)
                 ]);
                 setStats(statsRes.data);
                 setAlerts(alertsRes.data);

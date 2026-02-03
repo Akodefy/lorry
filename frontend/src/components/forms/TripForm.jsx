@@ -30,8 +30,8 @@ const TripForm = ({ onSubmit, onCancel, initialData }) => {
         const fetchData = async () => {
             try {
                 const [lorriesRes, driversRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/lorries'),
-                    axios.get('http://localhost:5000/api/drivers')
+                    axios.get(`${import.meta.env.VITE_API_URL}/api/lorries`),
+                    axios.get(`${import.meta.env.VITE_API_URL}/api/drivers`)
                 ]);
                 setLorryOptions(lorriesRes.data);
                 setDriverOptions(driversRes.data);

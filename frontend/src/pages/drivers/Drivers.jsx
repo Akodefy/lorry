@@ -13,7 +13,7 @@ const Drivers = () => {
 
     const fetchDrivers = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/drivers');
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/drivers`);
             setDrivers(res.data);
             setLoading(false);
         } catch (err) {
@@ -29,9 +29,9 @@ const Drivers = () => {
     const handleAddDriver = async (data) => {
         try {
             if (editingDriver) {
-                await axios.put(`http://localhost:5000/api/drivers/${editingDriver._id}`, data);
+                await axios.put(`${import.meta.env.VITE_API_URL}/api/drivers/${editingDriver._id}`, data);
             } else {
-                await axios.post('http://localhost:5000/api/drivers', data);
+                await axios.post(`${import.meta.env.VITE_API_URL}/api/drivers`, data);
             }
             fetchDrivers();
             setIsModalOpen(false);
@@ -44,7 +44,7 @@ const Drivers = () => {
     const handleDeleteDriver = async (id) => {
         if (window.confirm('Are you sure you want to delete this driver?')) {
             try {
-                await axios.delete(`http://localhost:5000/api/drivers/${id}`);
+                await axios.delete(`${import.meta.env.VITE_API_URL}/api/drivers/${id}`);
                 fetchDrivers();
             } catch (err) {
                 console.error('Error deleting driver:', err);
