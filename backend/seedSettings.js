@@ -10,13 +10,19 @@ mongoose.connect(process.env.MONGO_URI)
         console.log('MongoDB Connected');
 
         const key = 'audit_lock_password';
-        const plainPassword = 'Openthelock';
 
         // Check if setting exists
         const existing = await SystemSetting.findOne({ key });
         if (existing) {
             console.log('Lock password already exists in DB');
         } else {
+            const plainPassword = process.env.LOCK_PASSWORD;
+
+            if (!plainPassword) {
+                console.error('LOCK_PASSWORD must be set in .env to create new lock settings');
+                process.exit(1);
+            }
+
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(plainPassword, salt);
 

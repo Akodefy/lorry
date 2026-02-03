@@ -50,3 +50,28 @@ exports.getMe = async (req, res) => {
         res.status(500).send('Server error');
     }
 };
+
+exports.seedAdmin = async (req, res) => {
+    try {
+        const email = process.env.ADMIN_EMAIL || 'admin@yoyotransport.com';
+        const name = 'Admin User';
+
+        let user = await User.findOne({ email });
+        if (user) return res.status(400).json({ message: 'Admin user already exists' });
+
+        const password = process.env.ADMIN_PASSWORD;
+        if (!password) {
+            return res.status(500).json({ message: 'ADMIN_PASSWORD not set in environment environment variables' });
+        }
+
+        user = new User({ name, email, password, role: 'admin' });
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
+        await user.save();
+
+        res.json({ message: 'Admin user created successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+};

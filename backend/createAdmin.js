@@ -10,26 +10,33 @@ const createAdmin = async () => {
         await mongoose.connect(process.env.MONGO_URI);
         console.log('MongoDB Connected');
 
-        const adminExists = await User.findOne({ email: 'admin@yoyotransport.com' });
+        const email = process.env.ADMIN_EMAIL || 'admin@yoyotransport.com';
+
+        const adminExists = await User.findOne({ email });
         if (adminExists) {
-            console.log('Admin user already exists');
+            console.log(`Admin user (${email}) already exists`);
             process.exit();
         }
 
+        const password = process.env.ADMIN_PASSWORD;
+        if (!password) {
+            console.error('ADMIN_PASSWORD must be set in .env to create a new admin');
+            process.exit(1);
+        }
+
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash('admin123', salt);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
         const adminUser = new User({
             name: 'Admin User',
-            email: 'admin@yoyotransport.com',
+            email: email,
             password: hashedPassword,
             role: 'admin'
         });
 
         await adminUser.save();
         console.log('Admin user created successfully');
-        console.log('Email: admin@yoyotransport.com');
-        console.log('Password: admin123');
+        console.log(`Email: ${email}`);
         process.exit();
     } catch (error) {
         console.error('Error creating admin user:', error);

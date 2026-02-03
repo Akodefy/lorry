@@ -53,14 +53,15 @@ app.get('/health', (req, res) => {
 // Keep-alive mechanism for Render
 const https = require('https');
 setInterval(() => {
-    const url = 'https://lorry-1tu2.onrender.com';
-    console.log(`[Keep-Alive] Pinging ${url}...`);
-
-    https.get(url, (res) => {
-        console.log(`[Keep-Alive] Status: ${res.statusCode}`);
-    }).on('error', (err) => {
-        console.error(`[Keep-Alive] Error: ${err.message}`);
-    });
+    const url = process.env.RENDER_EXTERNAL_URL || process.env.BACKEND_URL;
+    if (url) {
+        console.log(`[Keep-Alive] Pinging ${url}...`);
+        https.get(url, (res) => {
+            console.log(`[Keep-Alive] Status: ${res.statusCode}`);
+        }).on('error', (err) => {
+            console.error(`[Keep-Alive] Error: ${err.message}`);
+        });
+    }
 }, 5 * 60 * 1000); // Run every 5 minutes
 
 
