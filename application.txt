@@ -1,0 +1,257 @@
+User Roles
+1. Admin / Owner
+
+Full control
+
+Adds lorries, drivers, trips
+
+Sees reports & reminders
+
+2. Staff / Manager (optional)
+
+Can add trips, expenses, POD
+
+Cannot delete master data
+
+🚚 Lorry (Vehicle) Management
+
+Each lorry profile stores:
+
+Basic Details
+
+Vehicle Number
+
+Model / Type
+
+Registration Date
+
+Owner Name
+
+Capacity (tons)
+
+Chassis & Engine No
+
+Document Expiry Tracking
+
+Road Tax Expiry
+
+Insurance Expiry
+
+FC (Fitness Certificate)
+
+Permit Expiry
+
+Pollution Certificate
+
+National Permit (if any)
+
+📅 Auto Reminder System
+
+Reminder before 30 / 15 / 7 days
+
+Dashboard alerts
+
+Email / WhatsApp (future)
+
+👨‍✈️ Driver Management
+
+Driver Name
+
+Phone Number
+
+License Number
+
+License Expiry Date
+
+Assigned Lorry
+
+Salary / Trip-based payment
+
+🧳 Trip Management (Core Module)
+➕ Create New Trip
+
+Trip ID (auto)
+
+Lorry selection
+
+Driver selection
+
+From Location
+
+To Location
+
+Start Date & Time
+
+Expected Return Date
+
+📦 Load Details
+
+Load Type (cement, rice, steel, etc.)
+
+Weight (tons / kg)
+
+Rate per ton / fixed
+
+Total Load Value
+
+💰 Trip Costs
+
+Diesel Cost
+
+Toll Charges
+
+Loading / Unloading
+
+Driver Advance
+
+Other Expenses
+
+🔁 Trip Status
+
+Created
+
+Ongoing
+
+Completed
+
+Cancelled
+
+📄 POD (Proof of Delivery)
+
+Upload POD Image / PDF
+
+POD Date
+
+Receiver Name
+
+Remarks
+
+POD linked to trip
+
+🔧 Maintenance & Service Management
+
+Service Type (oil change, brake, tyre)
+
+Service Date
+
+Meter Reading
+
+Cost
+
+Next Service Due (km/date)
+
+Garage Name
+
+Invoice upload
+
+📊 Expense & Profit Calculation
+
+Auto-calculated per trip:
+
+Total Income
+
+Total Expense
+
+Net Profit / Loss
+
+Monthly / Vehicle-wise:
+
+Expense Summary
+
+Maintenance Cost
+
+Profit Report
+
+⏰ Reminder & Alerts System
+
+Document expiry alerts
+
+Service due alerts
+
+License expiry alerts
+
+Overdue trip alerts
+
+Dashboard shows:
+
+🔴 Expired
+
+🟡 Expiring Soon
+
+🟢 Valid
+
+📊 Dashboard (Owner View)
+
+Total Lorries
+
+Active Trips
+
+Completed Trips
+
+Monthly Income
+
+Monthly Expenses
+
+Profit Summary
+
+Upcoming Expiries
+
+📂 Reports
+
+Trip Report (date-wise)
+
+Lorry-wise Expense
+
+Driver-wise Trips
+
+Profit & Loss Report
+
+Document Expiry Report
+
+Export:
+
+PDF
+
+Excel
+
+🧠 Technology Stack (Recommended)
+Backend
+
+Node.js + Express
+
+Frontend
+
+React + Vite + Tailwind CSS v4
+
+Clean dashboard UI
+
+Database
+
+MongoDB  mongodb+srv://lorrry:aQc600AqPVplWjjQ@cluster0.daqt8kf.mongodb.net/
+
+Notifications
+while login the appliation show the notification
+Cron Jobs (for reminders)
+
+
+🗂️ Database Tables (High-Level)
+
+Users
+
+Lorries
+
+Drivers
+
+Documents
+
+Trips
+
+Loads
+
+Expenses
+
+Maintenance
+
+PODs
+
+Notifications
