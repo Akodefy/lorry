@@ -50,23 +50,18 @@ app.get('/health', (req, res) => {
 // Self-ping to keep service alive (optional, better handled by external monitoring service like UptimeRobot)
 // Using Render's free tier spins down after inactivity. This helps but isn't a silver bullet inside the app itself.
 // However, implementing as requested:
+// Keep-alive mechanism for Render
 const https = require('https');
 setInterval(() => {
-    const backendUrl = process.env.BACKEND_URL || `http://localhost:${PORT}`; // Set BACKEND_URL in Render env vars
-    console.log(`Sending health check to ${backendUrl}/health`);
+    const url = 'https://lorry-1tu2.onrender.com';
+    console.log(`[Keep-Alive] Pinging ${url}...`);
 
-    const protocol = backendUrl.startsWith('https') ? https : require('http');
-
-    protocol.get(`${backendUrl}/health`, (resp) => {
-        if (resp.statusCode === 200) {
-            console.log('Health check successful');
-        } else {
-            console.log('Health check failed with status:', resp.statusCode);
-        }
-    }).on("error", (err) => {
-        console.log("Error sending health check:", err.message);
+    https.get(url, (res) => {
+        console.log(`[Keep-Alive] Status: ${res.statusCode}`);
+    }).on('error', (err) => {
+        console.error(`[Keep-Alive] Error: ${err.message}`);
     });
-}, 5 * 60 * 1000); // 5 minutes
+}, 5 * 60 * 1000); // Run every 5 minutes
 
 
 const PORT = process.env.PORT || 5000;

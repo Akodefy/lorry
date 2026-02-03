@@ -1,11 +1,11 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Truck, Users, Map, FileText, Lock, LogOut, Wrench } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { LayoutDashboard, Truck, Users, Map, FileText, Lock, LogOut, Wrench, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useContext, useState } from 'react';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 
-const Sidebar = () => {
+const SidebarContent = () => {
     const location = useLocation();
     const { logout } = useContext(AuthContext);
 
@@ -37,7 +37,7 @@ const Sidebar = () => {
     };
 
     return (
-        <div className="h-screen w-64 bg-slate-900 text-white flex flex-col shadow-2xl relative">
+        <>
             <div className="p-6 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center">
@@ -53,7 +53,7 @@ const Sidebar = () => {
                 </button>
             </div>
 
-            <nav className="flex-1 px-4 py-4 space-y-2">
+            <nav className="flex-1 px-4 py-4 space-y-2 overflow-y-auto">
                 {menuItems.map((item) => {
                     const isActive = location.pathname === item.path;
                     return (
@@ -86,7 +86,7 @@ const Sidebar = () => {
 
             {/* Lock Modal */}
             {isLockModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
                     <div className="bg-white rounded-xl shadow-xl w-full max-w-sm p-6 text-slate-800">
                         <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                             <Lock className="w-5 h-5 text-indigo-600" />
@@ -121,9 +121,50 @@ const Sidebar = () => {
                             </div>
                         </form>
                     </div>
-                </div >
+                </div>
             )}
-        </div >
+        </>
+    );
+};
+
+const Sidebar = () => {
+    return (
+        <div className="hidden md:flex h-screen w-64 bg-slate-900 text-white flex-col shadow-2xl relative">
+            <SidebarContent />
+        </div>
+    );
+};
+
+export const MobileSidebar = ({ isOpen, onClose }) => {
+    return (
+        <AnimatePresence>
+            {isOpen && (
+                <>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={onClose}
+                        className="fixed inset-0 bg-black/50 z-40 md:hidden backdrop-blur-sm"
+                    />
+                    <motion.div
+                        initial={{ x: '-100%' }}
+                        animate={{ x: 0 }}
+                        exit={{ x: '-100%' }}
+                        transition={{ type: 'spring', damping: 20, stiffness: 100 }}
+                        className="fixed inset-y-0 left-0 w-64 bg-slate-900 text-white z-50 md:hidden flex flex-col shadow-2xl"
+                    >
+                        <button
+                            onClick={onClose}
+                            className="absolute top-4 right-4 text-slate-400 hover:text-white"
+                        >
+                            <X className="w-6 h-6" />
+                        </button>
+                        <SidebarContent />
+                    </motion.div>
+                </>
+            )}
+        </AnimatePresence>
     );
 };
 
